@@ -1,0 +1,24 @@
+- name: creating user
+  hosts: web
+  become: yes
+  tasks:
+  - name: checking user
+    ansible.builtin.command: id expence
+    register: USER
+    ignore_errors: true
+
+  - name: user is exit or not
+    ansible.builtin.debug:
+      msg: "userid is {{USER}}"
+
+  - name: user add
+    ansible.builtin.command: useradd expence
+    when: USER.rc != 0
+
+  - name: user is exit or not
+    ansible.builtin.debug:
+      msg: "userid is {{USER}}"
+
+    
+    
+     

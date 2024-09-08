@@ -1,0 +1,27 @@
+- name: "LAUNCE THE INSTANCES THROUGH ANCIBLE"
+  hosts: local
+  vars:
+    subnetid: subnet-0074974b2221ebe41
+    secgrpid: sg-0702ac86b9ebe68f7 #sg-0702ac86b9ebe68f7
+    amid: ami-09c813fb71547fc4f #ami-09c813fb71547fc4f
+    instances:
+    - mysql
+    - frontend
+    - backed
+  connection: local
+  become: yes
+  tasks:
+  - name: instances lanch
+    amazon.aws.ec2_instance:
+      name: "{{item}}"
+      region: us-east-1
+      vpc_subnet_id: "{{subnetid}}"
+      instance_type: "t3.micro"
+      security_group: "{{secgrpid}}"
+      image_id: "{{amid}}"
+    loop: "{{instances}}"
+    register: ec2_instances
+    
+  - name: print the ec2-instances data
+    ansible.builtin.debug:
+      msg: "{{ec2_instances}}"

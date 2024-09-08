@@ -1,0 +1,13 @@
+- name: passing variables by prompt
+  hosts: web
+  become: yes
+  vars_prompt:
+  - name: NAME
+    prompt: "ENTER YOUR NAME"
+  - name: WORK
+    prompt: "ENTER YOUR WORK"
+    private: false
+  tasks:
+  - name: "passing vars by prompt"
+    ansible.builtin.debug:
+      msg: "YOUR NAME IS {{NAME}} AND WORK IS {{WORK}}"

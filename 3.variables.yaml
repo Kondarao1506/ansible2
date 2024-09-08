@@ -1,0 +1,11 @@
+- name: variables declarations
+  hosts: web
+  become: yes
+  vars:
+    COURCES: "DEVOPS WITH ATWS"
+    DURATION: 120
+    TRAINER: PAVAN
+  tasks:
+    - name: variables
+      ansible.builtin.debug:
+       msg: "hi welcome to ansible course is: {{COURCES}} Trainer is :{{TRAINER}}"

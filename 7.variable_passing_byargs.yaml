@@ -1,0 +1,7 @@
+- name: variable passing by arguments
+  hosts: web
+  become: yes
+  tasks:
+  - name: variable passing by args
+    ansible.builtin.debug:
+      msg: "hi {{NAME}} welcome to {{COMPANY}}"

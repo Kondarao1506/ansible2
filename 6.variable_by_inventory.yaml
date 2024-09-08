@@ -1,0 +1,7 @@
+- name: passing variable by inventory file
+  hosts: web
+  become: yes
+  tasks:
+  - name: variable ny inventory file
+    ansible.builtin.debug:
+      msg: "Hi {{NAME}} you are doing {{WORK}}"
