@@ -4,6 +4,7 @@
     subnetid: subnet-0074974b2221ebe41
     secgrpid: sg-0702ac86b9ebe68f7 #sg-0702ac86b9ebe68f7
     amid: ami-09c813fb71547fc4f #ami-09c813fb71547fc4f
+    zone: kondarao.online
     instances:
     - mysql
     - frontend
@@ -25,3 +26,14 @@
   - name: print the ec2-instances data
     ansible.builtin.debug:
       msg: "{{ec2_instances}}"
+  - name: route53 setting records
+    amazon.aws.route53:
+      state: present
+      zone: "{{zone}}"
+      record: "{{item.item}}.{{zone}}"
+      type: A
+      ttl: 1
+      value: "{{item.instances[0].private_ip_address}}"
+      wait: true
+      overwrite: true
+    loop: "{{ec2_instances.results}}" 
