@@ -1,7 +1,7 @@
 - name: "LAUNCE THE INSTANCES THROUGH ANCIBLE"
   hosts: local
   vars:
-    subnetid: subnet-0074974b2221ebe41
+    subnetid: subnet-0074974b2221ebe41 
     secgrpid: sg-0702ac86b9ebe68f7 #sg-0702ac86b9ebe68f7
     amid: ami-09c813fb71547fc4f #ami-09c813fb71547fc4f
     zone: kondarao.online
@@ -12,6 +12,14 @@
   connection: local
   become: yes
   tasks:
+
+  - name: "installing pip mysql"
+    ansible.builtin.pip:
+      name:
+      - PyMySQL
+      - boto3
+      - botocore
+      executable: pip3.9
   - name: instances lanch
     amazon.aws.ec2_instance:
       name: "{{item}}"
